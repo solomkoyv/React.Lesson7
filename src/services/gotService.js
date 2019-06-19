@@ -5,28 +5,61 @@ export default class GotService {
     const res = await fetch(`${this._apiBase}${url}`);
 
     if (!res.ok) {
-      throw new Error(`Could not fetch${url}` + `, recived ${res.status}`);
+      throw new Error(`Could not fetch${url}, recived ${res.status}`);
     }
     return await res.json();
   };
-  getAllCharacters = () => {
-    return this.getResource(`/characters?page=5&pageSize=10`);
+  getAllCharacters = async () => {
+    const res = await this.getResource(`/characters?page=5&pageSize=10`);
+    return res.map(this._transformCharacter);
   };
-  getCharacter = id => {
-    return this.getResource(`/characters/${id}`);
+  getCharacter = async id => {
+    const character = await this.getResource(`/characters/${id}`);
+    return this._transformCharacter(character);
   };
-  getAllBooks = () => {
-    return this.getResource(`/books?page=5&pageSize=5`);
+  getAllBooks = async () => {
+    const books = await this.getResource(`/books?page=5&pageSize=5`);
+    return books.map(this._transformCharacter);
   };
-  getBook = id => {
-    return this.getResource(`/books/${id}`);
+  getBook = async id => {
+    const book = await this.getResource(`/books/${id}`);
+    return this._transformCharacter(book);
   };
-  getAllHouses = () => {
-    return this.getResource(`/houses?page=5&pageSize=5`);
+  getAllHouses = async () => {
+    const houses = await this.getResource(`/houses?page=5&pageSize=5`);
+    return houses.map(this._transformCharacter);
   };
-  getHouse = id => {
-    return this.getResource(`/houses/${id}`);
+  getHouse = async id => {
+    const house = await this.getResource(`/houses/${id}`);
+    return this._transformCharacter(house);
   };
+  _transformCharacter(char) {
+    return {
+      name: char.name,
+      gender: char.gender,
+      born: char.born,
+      dead: char.dead,
+      culture: char.culture
+    };
+  }
+  _transformHouse(house) {
+    return {
+      name: house.name,
+      region: house.region,
+      words: house.words,
+      titles: house.titles,
+      overlord: house.overlord,
+      ancestralWeapons: house.ancestralWeapons
+    };
+  }
+  _transformBook(book) {
+    return {
+      name: book.name,
+      numberOfPages: book.numberOfPages,
+      publisher: book.publisher,
+      released: book.released
+    };
+  }
 }
 
 // const got = new GotService();
