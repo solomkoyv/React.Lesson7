@@ -4,6 +4,7 @@ import styled from "styled-components";
 import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
+import { clearInterval } from "timers";
 
 const RandomBlock = styled.div`
   background-color: #fff;
@@ -20,11 +21,6 @@ const Gender = styled.span`
 `;
 
 export default class RandomChar extends Component {
-  constructor() {
-    super();
-    this.updateChar();
-  }
-
   gotService = new gotService();
 
   state = {
@@ -32,6 +28,15 @@ export default class RandomChar extends Component {
     loading: true,
     error: false
   };
+
+  componentDidMount() {
+    this.updateChar();
+    this.timerId = setInterval(this.updateChar, 1500);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerId);
+  }
 
   onCharLoaded = char => {
     this.setState({ char, loading: false });
@@ -41,14 +46,14 @@ export default class RandomChar extends Component {
     this.setState({ error: true, loading: false });
   };
 
-  updateChar() {
+  updateChar = () => {
     const id = Math.floor(Math.random() * 140 + 25);
     // const id = 1300000;
     this.gotService
       .getCharacter(id)
       .then(this.onCharLoaded)
       .catch(this.onError);
-  }
+  };
 
   render() {
     const { char, loading, error } = this.state;

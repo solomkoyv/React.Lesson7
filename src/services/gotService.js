@@ -1,5 +1,5 @@
 export default class GotService {
-  _apiBase = "https://anapioficeandfire.com/api/";
+  _apiBase = "https://www.anapioficeandfire.com/api";
 
   getResource = async url => {
     const res = await fetch(`${this._apiBase}${url}`);
@@ -18,20 +18,20 @@ export default class GotService {
     return this._transformCharacter(character);
   };
   getAllBooks = async () => {
-    const books = await this.getResource(`/books?page=5&pageSize=5`);
-    return books.map(this._transformCharacter);
+    const books = await this.getResource(`/books?page=5&pageSize=10`);
+    return books.map(this._transformBook);
   };
   getBook = async id => {
     const book = await this.getResource(`/books/${id}`);
-    return this._transformCharacter(book);
+    return this._transformBook(book);
   };
   getAllHouses = async () => {
-    const houses = await this.getResource(`/houses?page=5&pageSize=5`);
-    return houses.map(this._transformCharacter);
+    const houses = await this.getResource(`/houses?page=5&pageSize=10`);
+    return houses.map(this._transformHouse);
   };
   getHouse = async id => {
     const house = await this.getResource(`/houses/${id}`);
-    return this._transformCharacter(house);
+    return this._transformHouse(house);
   };
   _transformCharacter(char) {
     return {

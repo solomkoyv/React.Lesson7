@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import gotService from "../../services/gotService";
 
 // import "./charDetails.css";
 
@@ -16,26 +17,58 @@ const Name = styled.h4`
 `;
 
 export default class CharDetails extends Component {
+  gotService = new gotService();
+
+  state = {
+    char: null
+  };
+
+  componentDidMount() {
+    this.updateChar();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.charId !== prevProps.charId) {
+      this.updateChar();
+    }
+  }
+
+  updateChar() {
+    const charId = this.props;
+    if (!charId) {
+      return;
+    }
+    this.gotService.getCharacter(charId).then(char => {
+      this.setState({ char });
+    });
+  }
+
   render() {
+    if (!this.state.char) {
+      return <span className="select-error">Please select a character</span>;
+    }
+
+    const { name, gender, born, dead, culture } = this.state.char;
+
     return (
       <CharDetailsBlock>
-        <Name>John Snow</Name>
+        <Name>{name}</Name>
         <ul className="list-group list-group-flush">
           <li className="list-group-item d-flex justify-content-between">
             <span className="term">Gender</span>
-            <span>male</span>
+            <span>{gender}</span>
           </li>
           <li className="list-group-item d-flex justify-content-between">
             <span className="term">Born</span>
-            <span>1783</span>
+            <span>{born}</span>
           </li>
           <li className="list-group-item d-flex justify-content-between">
             <span className="term">Died</span>
-            <span>1820</span>
+            <span>{dead}</span>
           </li>
           <li className="list-group-item d-flex justify-content-between">
             <span className="term">Culture</span>
-            <span>First</span>
+            <span>{culture}</span>
           </li>
         </ul>
       </CharDetailsBlock>
