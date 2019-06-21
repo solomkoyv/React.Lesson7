@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Spinner from "../spinner";
+import ErrorMessage from "../errorMessage";
 
 // import './itemList.css';
 const ItemCharacter = styled.li`
@@ -8,7 +9,12 @@ const ItemCharacter = styled.li`
 `;
 
 export default class ItemList extends Component {
-  state = { itemList: null };
+  state = { itemList: null, error: false };
+
+  componentDidCatch() {
+    console.log("error");
+    this.setState({ error: true });
+  }
 
   componentDidMount() {
     const { getData } = this.props;
@@ -36,6 +42,10 @@ export default class ItemList extends Component {
 
   render() {
     const { itemList } = this.state;
+
+    if (this.state.error) {
+      return <ErrorMessage />;
+    }
 
     if (!itemList) {
       return <Spinner />;

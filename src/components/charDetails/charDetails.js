@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import gotService from "../../services/gotService";
 import Spinner from "../spinner";
-// import ErrorMessage from "../errorMessage";
+import ErrorMessage from "../errorMessage";
 
 import "./charDetails.css";
 
@@ -42,6 +42,11 @@ export default class CharDetails extends Component {
     this.updateChar();
   }
 
+  componentDidCatch() {
+    console.log("error");
+    this.setState({ error: true });
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.charId !== prevProps.charId) {
       this.updateChar();
@@ -66,8 +71,16 @@ export default class CharDetails extends Component {
     if (!this.state.char) {
       return <span className="select-error">Please select a character</span>;
     }
-    const { char } = this.state;
+    const { char, loading, error } = this.state;
     const { name } = char;
+
+    if (!error) {
+      return <ErrorMessage />;
+    }
+
+    if (loading) {
+      return <Spinner />;
+    }
 
     return (
       <CharDetailsBlock>
