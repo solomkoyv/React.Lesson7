@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 // import { Col, Row, Container } from "reactstrap";
-import ItemList from "../itemList";
-import gotService from "../../services/gotService";
+import ItemList from "../../itemList";
+import gotService from "../../../services/gotService";
 
-import CharDetails, { Field } from "../charDetails";
-import ErrorMessage from "../errorMessage";
-import RowBlock from "../rowBlock";
+import CharDetails, { Field } from "../../charDetails";
+import ErrorMessage from "../../errorMessage";
+import RowBlock from "../../rowBlock";
 
 export default class CharacterPage extends Component {
   gotService = new gotService();
