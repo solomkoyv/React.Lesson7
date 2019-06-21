@@ -4,7 +4,7 @@ import styled from "styled-components";
 import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
-import { clearInterval } from "timers";
+// import { clearInterval } from "timers";
 
 const RandomBlock = styled.div`
   background-color: #fff;
@@ -31,7 +31,7 @@ export default class RandomChar extends Component {
 
   componentDidMount() {
     this.updateChar();
-    this.timerId = setInterval(this.updateChar, 1500);
+    this.timerId = setInterval(this.updateChar, 3000);
   }
 
   componentWillUnmount() {

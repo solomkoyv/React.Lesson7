@@ -33,15 +33,22 @@ export default class GotService {
     const house = await this.getResource(`/houses/${id}`);
     return this._transformHouse(house);
   };
-  _transformCharacter(char) {
+
+  charId = url => {
+    return url.slice(url.lastIndexOf("/") + 1);
+  };
+
+  _transformCharacter = char => {
     return {
       name: char.name,
       gender: char.gender,
       born: char.born,
       dead: char.dead,
-      culture: char.culture
+      culture: char.culture,
+      // id: char.url.slice(char.url.lastIndexOf("/") + 1)
+      id: this.charId(char.url)
     };
-  }
+  };
   _transformHouse(house) {
     return {
       name: house.name,

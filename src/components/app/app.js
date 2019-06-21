@@ -9,7 +9,7 @@ import CharacterPage from "../characterPage/";
 import "./app.css";
 
 export default class App extends Component {
-  state = { hide: true, error: false };
+  state = { hide: true, error: false, selectedChar: 130 };
 
   componentDidCatch() {
     console.log("error");

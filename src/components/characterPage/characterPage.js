@@ -22,7 +22,10 @@ export default class CharacterPage extends Component {
     return (
       <Row>
         <Col md="6">
-          <ItemList onCharSelected={this.onCharSelected} />
+          <ItemList
+            onCharSelected={this.onCharSelected}
+            id={this.state.selectedChar}
+          />
         </Col>
         <Col md="6">
           <CharDetails charId={this.state.selectedChar} />
