@@ -6,9 +6,15 @@ import RandomChar from "../randomChar";
 import { Button } from "reactstrap";
 import ErrorMessage from "../errorMessage";
 import CharacterPage from "../characterPage/";
+import CharDetails from "../charDetails";
+import ItemList from "../itemList";
+import gotService from "../../services/gotService";
+
 import "./app.css";
 
 export default class App extends Component {
+  gotService = new gotService();
+
   state = { hide: true, error: false, selectedChar: 130 };
 
   componentDidCatch() {
@@ -22,7 +28,7 @@ export default class App extends Component {
     });
   };
 
-  onCharSelected = id => {
+  onItemSelected = id => {
     this.setState({ selectedChar: id });
   };
 
@@ -51,6 +57,37 @@ export default class App extends Component {
             </Col>
           </Row>
           <CharacterPage />
+          <Row>
+            <Col md="6">
+              <ItemList
+                onItemSelected={this.onItemSelected}
+                id={this.state.selectedChar}
+                getData={this.gotService.getAllBooks}
+                renderItem={item => (
+                  <>
+                    <span>{item.name}</span>
+                    <button>Click me</button>
+                  </>
+                )}
+              />
+            </Col>
+            <Col md="6">
+              <CharDetails charId={this.state.selectedChar} />
+            </Col>
+          </Row>
+          <Row>
+            <Col md="6">
+              <ItemList
+                onItemSelected={this.onItemSelected}
+                id={this.state.selectedChar}
+                getData={this.gotService.getAllHouses}
+                renderItem={item => `${item.name}`}
+              />
+            </Col>
+            <Col md="6">
+              <CharDetails charId={this.state.selectedChar} />
+            </Col>
+          </Row>
         </Container>
       </>
     );

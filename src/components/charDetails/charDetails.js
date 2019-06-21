@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import gotService from "../../services/gotService";
 import Spinner from "../spinner";
-import ErrorMessage from "../errorMessage";
+// import ErrorMessage from "../errorMessage";
 
 import "./charDetails.css";
 
@@ -18,11 +18,23 @@ const Name = styled.h4`
   text-align: center;
 `;
 
+const Field = ({ char, field, label }) => {
+  return (
+    <li className="list-group-item d-flex justify-content-between">
+      <span className="term">{label}</span>
+      <span>{char[field]}</span>
+    </li>
+  );
+};
+
+export { Field };
+
 export default class CharDetails extends Component {
   gotService = new gotService();
 
   state = {
     char: {},
+    error: false,
     loading: true
   };
 
@@ -46,45 +58,26 @@ export default class CharDetails extends Component {
       .then(char => {
         this.setState({ char });
       })
-      .then(this.setState({ loading: false }));
+      .then(this.setState({ loading: false }))
+      .catch(this.setState({ error: true }));
   }
 
   render() {
     if (!this.state.char) {
       return <span className="select-error">Please select a character</span>;
     }
+    const { char } = this.state;
+    const { name } = char;
 
-    const { char, loading } = this.state;
-
-    const content = !loading ? <View char={char} /> : <Spinner />;
-
-    return <CharDetailsBlock>{content}</CharDetailsBlock>;
+    return (
+      <CharDetailsBlock>
+        <Name>{name}</Name>
+        <ul className="list-group list-group-flush">
+          {React.Children.map(this.props.children, child => {
+            return React.cloneElement(child, { char });
+          })}
+        </ul>
+      </CharDetailsBlock>
+    );
   }
 }
-
-const View = ({ char }) => {
-  const { name, gender, born, dead, culture } = char;
-  return (
-    <>
-      <Name>{name}</Name>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item d-flex justify-content-between">
-          <span className="term">Gender</span>
-          <span>{gender}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between">
-          <span className="term">Born</span>
-          <span>{born}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between">
-          <span className="term">Died</span>
-          <span>{dead}</span>
-        </li>
-        <li className="list-group-item d-flex justify-content-between">
-          <span className="term">Culture</span>
-          <span>{culture}</span>
-        </li>
-      </ul>
-    </>
-  );
-};

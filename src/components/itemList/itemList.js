@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 
 // import './itemList.css';
@@ -9,41 +8,40 @@ const ItemCharacter = styled.li`
 `;
 
 export default class ItemList extends Component {
-  gotService = new gotService();
-
-  state = { charList: null };
+  state = { itemList: null };
 
   componentDidMount() {
-    this.gotService.getAllCharacters().then(charList => {
-      this.setState({ charList });
+    const { getData } = this.props;
+
+    getData().then(itemList => {
+      this.setState({ itemList });
     });
   }
 
   renderItems(arr) {
-    // const { id } = this.props;
-    // console.log({ id });
-    return arr.map((item, i) => {
-      // console.log(item.id);
+    return arr.map(item => {
+      const { id } = item;
+      const label = this.props.renderItem(item);
       return (
         <ItemCharacter
-          key={item.id}
+          key={id}
           className="list-group-item"
-          onClick={() => this.props.onCharSelected(item.id)}
+          onClick={() => this.props.onItemSelected(id)}
         >
-          {item.name}
+          {label}
         </ItemCharacter>
       );
     });
   }
 
   render() {
-    const { charList } = this.state;
+    const { itemList } = this.state;
 
-    if (!charList) {
+    if (!itemList) {
       return <Spinner />;
     }
 
-    const items = this.renderItems(charList);
+    const items = this.renderItems(itemList);
 
     return <ul className="item-list list-group">{items}</ul>;
   }
