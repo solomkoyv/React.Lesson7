@@ -4,9 +4,9 @@ import gotService from "../../services/gotService";
 import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
 
-import "./charDetails.css";
+import "./itemDetails.css";
 
-const CharDetailsBlock = styled.div`
+const ItemDetailsBlock = styled.div`
   background-color: #fff;
   padding: 25px 25px 15px 25px;
   margin-bottom: 40px;
@@ -18,28 +18,28 @@ const Name = styled.h4`
   text-align: center;
 `;
 
-const Field = ({ char, field, label }) => {
+const Field = ({ item, field, label }) => {
   return (
     <li className="list-group-item d-flex justify-content-between">
       <span className="term">{label}</span>
-      <span>{char[field]}</span>
+      <span>{item[field]}</span>
     </li>
   );
 };
 
 export { Field };
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
   gotService = new gotService();
 
   state = {
-    char: {},
+    item: {},
     error: false,
     loading: true
   };
 
   componentDidMount() {
-    this.updateChar();
+    this.updateItem();
   }
 
   componentDidCatch() {
@@ -48,31 +48,31 @@ export default class CharDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.charId !== prevProps.charId) {
-      this.updateChar();
+    if (this.props.itemId !== prevProps.itemId) {
+      this.updateItem();
     }
   }
 
-  updateChar() {
-    const { charId, singleId } = this.props;
-    if (!charId) {
+  updateItem() {
+    const { typeItems, itemId } = this.props;
+    if (!itemId) {
       return;
     }
     this.gotService
-      .getItem(`characters`, charId)
-      .then(char => {
-        this.setState({ char });
+      .getItem(typeItems, itemId)
+      .then(item => {
+        this.setState({ item });
       })
       .then(this.setState({ loading: false }))
       .catch(this.setState({ error: true }));
   }
 
   render() {
-    if (!this.state.char) {
+    if (!this.state.item) {
       return <span className="select-error">Please select a character</span>;
     }
-    const { char, loading, error } = this.state;
-    const { name } = char;
+    const { item, loading, error } = this.state;
+    const { name } = item;
 
     if (!error) {
       return <ErrorMessage />;
@@ -83,14 +83,14 @@ export default class CharDetails extends Component {
     }
 
     return (
-      <CharDetailsBlock>
+      <ItemDetailsBlock>
         <Name>{name}</Name>
         <ul className="list-group list-group-flush">
           {React.Children.map(this.props.children, child => {
-            return React.cloneElement(child, { char });
+            return React.cloneElement(child, { item });
           })}
         </ul>
-      </CharDetailsBlock>
+      </ItemDetailsBlock>
     );
   }
 }

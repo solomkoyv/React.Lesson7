@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 // import styled from "styled-components";
 import { Col, Row, Container } from "reactstrap";
+import { Button } from "reactstrap";
 import Header from "../header";
 import RandomChar from "../randomChar";
-import { Button } from "reactstrap";
 import ErrorMessage from "../errorMessage";
-import CharacterPage from "../pages/characterPage";
-import CharDetails from "../charDetails";
+import CharDetails from "../itemDetails";
 import ItemList from "../itemList";
 import gotService from "../../services/gotService";
+import CharacterPage from "../pages/characterPage";
 import BookPage from "../pages/bookPage";
 import HousePage from "../pages/housePage";
 

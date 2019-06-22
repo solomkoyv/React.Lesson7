@@ -4,7 +4,7 @@ import Spinner from "../spinner";
 import ErrorMessage from "../errorMessage";
 
 // import './itemList.css';
-const ItemCharacter = styled.li`
+const Item = styled.li`
   cursor: pointer;
 `;
 
@@ -19,7 +19,7 @@ export default class ItemList extends Component {
   componentDidMount() {
     const { getData } = this.props;
 
-    getData(`characters`).then(itemList => {
+    getData.then(itemList => {
       this.setState({ itemList });
     });
   }
@@ -29,13 +29,13 @@ export default class ItemList extends Component {
       const { id } = item;
       const label = this.props.renderItem(item);
       return (
-        <ItemCharacter
+        <Item
           key={id}
           className="list-group-item"
           onClick={() => this.props.onItemSelected(id)}
         >
           {label}
-        </ItemCharacter>
+        </Item>
       );
     });
   }

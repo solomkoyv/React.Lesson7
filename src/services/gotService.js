@@ -12,7 +12,7 @@ export default class GotService {
 
   getAllItems = async typeItems => {
     const res = await this.getResource(`/${typeItems}`);
-    return res.map(this._transformItem(res));
+    return res.map(this._transformItem);
   };
 
   getItem = async (typeItems, idItem) => {
@@ -120,7 +120,7 @@ export default class GotService {
   // };
 }
 
-// const got = new GotService();
+// export default const got = new GotService();
 // got.getAllCharacters().then(res => console.log(res));
 // got.getCharacter(5).then(res => console.log(res));
 // got.getAllBooks().then(res => console.log(res));
