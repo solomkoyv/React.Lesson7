@@ -50,7 +50,7 @@ export default class RandomChar extends Component {
     const id = Math.floor(Math.random() * 140 + 25);
     // const id = 1300000;
     this.gotService
-      .getCharacter(id)
+      .getItem(`characters`, id)
       .then(this.onCharLoaded)
       .catch(this.onError);
   };
@@ -73,7 +73,7 @@ export default class RandomChar extends Component {
 }
 
 const View = ({ char }) => {
-  const { name, gender, born, dead, culture } = char;
+  const { name, gender, born, died, culture } = char;
   return (
     <>
       <NameCharacter>Random Character: {name}</NameCharacter>
@@ -88,7 +88,7 @@ const View = ({ char }) => {
         </li>
         <li className="list-group-item d-flex justify-content-between">
           <span className="term">Died </span>
-          <span>{dead}</span>
+          <span>{died}</span>
         </li>
         <li className="list-group-item d-flex justify-content-between">
           <span className="term">Culture </span>

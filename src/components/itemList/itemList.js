@@ -19,7 +19,7 @@ export default class ItemList extends Component {
   componentDidMount() {
     const { getData } = this.props;
 
-    getData().then(itemList => {
+    getData(`characters`).then(itemList => {
       this.setState({ itemList });
     });
   }

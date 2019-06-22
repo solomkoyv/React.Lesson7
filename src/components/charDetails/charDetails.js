@@ -58,17 +58,11 @@ export default class CharDetails extends Component {
     if (!charId) {
       return;
     }
-
-    singleId(charId)
+    this.gotService
+      .getItem(`characters`, charId)
       .then(char => {
         this.setState({ char });
       })
-
-      // this.gotService
-      // .getCharacter(charId)
-      // .then(char => {
-      //   this.setState({ char });
-      // })
       .then(this.setState({ loading: false }))
       .catch(this.setState({ error: true }));
   }

@@ -10,6 +10,7 @@ import CharDetails from "../charDetails";
 import ItemList from "../itemList";
 import gotService from "../../services/gotService";
 import BookPage from "../pages/bookPage";
+import HousePage from "../pages/housePage";
 
 import "./app.css";
 
@@ -59,19 +60,7 @@ export default class App extends Component {
           </Row>
           <CharacterPage />
           <BookPage />
-          <Row>
-            <Col md="6">
-              <ItemList
-                onItemSelected={this.onItemSelected}
-                id={this.state.selectedChar}
-                getData={this.gotService.getAllHouses}
-                renderItem={item => `${item.name}`}
-              />
-            </Col>
-            <Col md="6">
-              <CharDetails charId={this.state.selectedChar} />
-            </Col>
-          </Row>
+          <HousePage />
         </Container>
       </>
     );

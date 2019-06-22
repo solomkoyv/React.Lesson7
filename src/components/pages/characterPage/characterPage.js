@@ -29,7 +29,7 @@ export default class CharacterPage extends Component {
       <ItemList
         onItemSelected={this.onItemSelected}
         id={this.state.selectedChar}
-        getData={this.gotService.getAllCharacters}
+        getData={this.gotService.getAllItems}
         renderItem={({ name, gender }) => `${name} (${gender})`}
       />
     );
@@ -38,7 +38,7 @@ export default class CharacterPage extends Component {
       <CharDetails charId={this.state.selectedChar}>
         <Field field="gender" label="Gender" />
         <Field field="born" label="Born" />
-        <Field field="died" label="Died" />
+        <Field field="dead" label="Dead" />
         <Field field="culture" label="Culture" />
       </CharDetails>
     );

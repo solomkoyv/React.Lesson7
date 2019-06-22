@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ItemList from "../../itemList";
 import gotService from "../../../services/gotService";
 
-import CharDetails, { Field } from "../../charDetails";
+import CharDetails, { Field } from "../../charDetails/";
 import ErrorMessage from "../../errorMessage";
 import RowBlock from "../../rowBlock";
 
@@ -36,10 +36,11 @@ export default class BookPage extends Component {
     const bookDetails = (
       <CharDetails
         charId={this.state.selectedBook}
-        singleId={this.gotService.getBook.id}
+        singleId={this.gotService.getBook}
       >
         <Field field="name" label="Name" />
         <Field field="numberOfPages" label="NumberOfPages" />
+        <Field field="publisher" label="Publisher" />
         <Field field="released" label="released" />
       </CharDetails>
     );
