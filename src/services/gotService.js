@@ -1,4 +1,4 @@
-export default class GotService {
+export default class GotServices {
   _apiBase = "https://www.anapioficeandfire.com/api";
 
   getResource = async url => {
@@ -120,7 +120,7 @@ export default class GotService {
   // };
 }
 
-// export default const got = new GotService();
+// export default const GotService = new GotService();
 // got.getAllCharacters().then(res => console.log(res));
 // got.getCharacter(5).then(res => console.log(res));
 // got.getAllBooks().then(res => console.log(res));
